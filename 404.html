@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 — Page Not Found | IP Range Calculator</title>
+    <style>
+      :root {
+        --bg: #f1f5f9;
+        --bg-card: #ffffff;
+        --text: #0f172a;
+        --text-muted: #64748b;
+        --border: #e2e8f0;
+        --accent: #0ea5e9;
+        --accent-hover: #0284c7;
+        --success: #22c55e;
+        --shadow: 0 4px 20px rgba(0,0,0,0.06);
+      }
+      [data-theme="dark"] {
+        --bg: #0b1220;
+        --bg-card: #131c2e;
+        --text: #e2e8f0;
+        --text-muted: #94a3b8;
+        --border: #1e293b;
+        --accent: #38bdf8;
+        --accent-hover: #0ea5e9;
+        --success: #4ade80;
+        --shadow: 0 4px 20px rgba(0,0,0,0.4);
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        font-family: 'Segoe UI', Tahoma, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 24px 16px;
+        transition: background 0.3s, color 0.3s;
+      }
+      .theme-toggle {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: var(--bg-card);
+        color: var(--text);
+        cursor: pointer;
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+        box-shadow: var(--shadow);
+      }
+      .theme-toggle:hover { transform: scale(1.05); border-color: var(--accent); }
+      .card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 48px 40px;
+        max-width: 520px;
+        width: 100%;
+        text-align: center;
+        box-shadow: var(--shadow);
+        animation: fadeIn 0.5s ease;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(12px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .code {
+        font-size: 96px;
+        font-weight: 800;
+        line-height: 1;
+        background: linear-gradient(135deg, var(--accent), var(--success));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 16px;
+        letter-spacing: -2px;
+      }
+      h1 {
+        font-size: 22px;
+        font-weight: 700;
+        margin-bottom: 10px;
+      }
+      p {
+        font-size: 14px;
+        color: var(--text-muted);
+        line-height: 1.6;
+        margin-bottom: 28px;
+      }
+      .mono {
+        font-family: 'Consolas', 'Monaco', monospace;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        padding: 10px 14px;
+        border-radius: 10px;
+        font-size: 12px;
+        color: var(--accent);
+        margin-bottom: 28px;
+        word-break: break-all;
+      }
+      .btn {
+        display: inline-block;
+        padding: 12px 24px;
+        border-radius: 10px;
+        background: var(--accent);
+        color: #fff;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.2s;
+        border: none;
+        cursor: pointer;
+        font-family: inherit;
+      }
+      .btn:hover { background: var(--accent-hover); transform: translateY(-1px); }
+      @media (max-width: 480px) {
+        .card { padding: 36px 24px; }
+        .code { font-size: 72px; }
+        h1 { font-size: 18px; }
+      }
+    </style>
+  </head>
+  <body>
+    <button class="theme-toggle" id="themeToggle" title="Toggle theme">☀️</button>
+
+    <div class="card">
+      <div class="code">404</div>
+      <h1>Page Not Found</h1>
+      <p>The address you entered doesn't match any subnet in this network.</p>
+      <div class="mono" id="pathDisplay"></div>
+      <a class="btn" href="/">← Back to IP Range Calculator</a>
+    </div>
+
+    <script>
+      const themeToggle = document.getElementById('themeToggle');
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      if (savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        themeToggle.textContent = '🌙';
+      }
+      themeToggle.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme');
+        if (current === 'dark') {
+          document.documentElement.removeAttribute('data-theme');
+          themeToggle.textContent = '☀️';
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          themeToggle.textContent = '🌙';
+          localStorage.setItem('theme', 'dark');
+        }
+      });
+
+      document.getElementById('pathDisplay').textContent = 'Requested: ' + window.location.pathname;
+    </script>
+  </body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta name="description" content="IP Range Calculator — a browser-based VLSM and subnet planner that automatically allocates IP ranges based on required hosts per network.">
+    <meta name="keywords" content="IP Range Calculator, VLSM, subnet planner, subnet calculator, CIDR, IP allocation, network planning, VLSM calculator, subnetting">
+    <meta name="author" content="Fouad Salehi">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0b1220">
+    <link rel="canonical" href="https://iprangecalculator.web.app/">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="IP Range Calculator">
+    <meta property="og:title" content="IP Range Calculator — VLSM & Subnet Planner">
+    <meta property="og:description" content="Automatically allocate IP ranges based on required hosts per network. Fully client-side VLSM and subnet planning tool.">
+    <meta property="og:url" content="https://iprangecalculator.web.app/">
+    <meta property="og:image" content="https://iprangecalculator.web.app/assets/images/brandmark.png">
+    <meta property="og:image:alt" content="IP Range Calculator">
+    <meta property="og:locale" content="en_US">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Range Calculator — VLSM & Subnet Planner</title>
+    <link rel="stylesheet" href="./assets/css/variables.css">
+    <link rel="stylesheet" href="./assets/css/base.css">
+    <link rel="stylesheet" href="./assets/css/components.css">
+    <link rel="stylesheet" href="./assets/css/responsive.css">
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="header-title">
+          <h1>IP Range Calculator</h1>
+          <span class="subtitle">VLSM &amp; Subnet Planner</span>
+        </div>
+        <button class="theme-toggle" id="themeToggle" title="Toggle theme">☀️</button>
+      </header>
+
+      <div class="card">
+        <div class="card-title">Base Network</div>
+        <input type="text" id="baseNetwork" class="mono" value="192.168.1.0/24" placeholder="192.168.1.0/24">
+      </div>
+
+      <div class="card">
+        <div class="card-title">Add Network</div>
+        <div class="add-row">
+          <div>
+            <label>Network Name</label>
+            <input type="text" id="netName" placeholder="VLAN10">
+          </div>
+          <div>
+            <label>Required Hosts</label>
+            <input type="number" id="hostCount" min="1" placeholder="50">
+          </div>
+          <button class="btn btn-primary" type="button">+ Add</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Networks</div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:40px;">#</th>
+                <th>Name</th>
+                <th>Hosts</th>
+                <th style="width:180px;">Order</th>
+                <th style="width:80px;">Action</th>
+              </tr>
+            </thead>
+            <tbody id="netList">
+              <tr><td colspan="5" class="empty">No networks added yet</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Result</div>
+        <div id="resultStats" class="stats"></div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Network</th>
+                <th>Mask</th>
+                <th>Usable Range</th>
+                <th>Broadcast</th>
+              </tr>
+            </thead>
+            <tbody id="resultList">
+              <tr><td colspan="5" class="empty">Results will appear here</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="error" id="errorMsg"></div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="footer-socials">
+        <a class="social-link" href="https://github.com/fouad-salehi" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.71.08-.71 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.69 5.41-5.25 5.69.41.36.78 1.06.78 2.14 0 1.55-.01 2.8-.01 3.18 0 .31.21.68.8.56A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+        </a>
+        <a class="social-link" href="https://gitlab.com/fouad-salehi" target="_blank" rel="noopener" title="GitLab" aria-label="GitLab">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.65 13.02 12 22.5 1.35 13.02a.94.94 0 0 1-.34-1.05L2.3 5.1a.47.47 0 0 1 .9 0l1.29 3.97h15.02l1.29-3.97a.47.47 0 0 1 .9 0l1.29 6.87a.94.94 0 0 1-.34 1.05ZM12 22.5 15.56 9.07H8.44L12 22.5Z"/></svg>
+        </a>
+        <a class="social-link" href="https://orcid.org/0009-0008-6241-8599" target="_blank" rel="noopener" title="ORCID" aria-label="ORCID">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0ZM7.37 18.11H5.53V8.53h1.84v9.58ZM6.45 7.3a1.1 1.1 0 1 1 0-2.2 1.1 1.1 0 0 1 0 2.2Zm11.88 6.6c0 2.75-1.83 4.21-4.36 4.21h-2.66V8.53h2.78c2.42 0 4.24 1.52 4.24 4.16v1.21Zm-1.84-1.32c0-1.85-1.13-2.9-2.72-2.9h-.65v7.11h.65c1.62 0 2.72-1.05 2.72-3.02v-1.19Z"/></svg>
+        </a>
+        <a class="social-link" href="https://instagram.com/fouad_salehi" target="_blank" rel="noopener" title="Instagram" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63a5.88 5.88 0 0 0-2.13 1.38A5.88 5.88 0 0 0 .63 4.14C.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.31.79.72 1.46 1.38 2.13.67.66 1.34 1.07 2.13 1.38.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56a5.88 5.88 0 0 0 2.13-1.38 5.88 5.88 0 0 0 1.38-2.13c.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a5.88 5.88 0 0 0-1.38-2.13A5.88 5.88 0 0 0 19.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0Zm0 5.84a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32ZM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8Zm7.85-10.4a1.44 1.44 0 1 1-2.88 0 1.44 1.44 0 0 1 2.88 0Z"/></svg>
+        </a>
+      </div>
+      <div class="footer-text">
+        Built by <a href="https://github.com/fouad-salehi" target="_blank" rel="noopener">Fouad Salehi</a> · IP Range Calculator
+      </div>
+    </footer>
+
+    <script type="module" src="./assets/js/main.js"></script>
+  </body>
+</html>
