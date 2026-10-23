@@ -1,4 +1,5 @@
 # IP Range Calculator
+
 ![Platform](https://img.shields.io/badge/platform-Web-blue)
 ![Language](https://img.shields.io/badge/language-JavaScript-yellow)
 ![Tool](https://img.shields.io/badge/tool-VLSM%20Calculator-orange)
@@ -14,9 +15,10 @@
 IP Range Calculator is a browser-based VLSM and subnet planning tool designed to demonstrate automatic IP range allocation using modern web technologies.
 The project uses vanilla JavaScript to calculate subnets directly in the browser, without requiring additional software installation or a dedicated backend for computation.
 
-**IP Range Calculator provides two main input flows:**
-- **Base Network** — Define the base network (e.g., `192.168.1.0/24`).
-- **Network Requirements** — Add networks with the required host count for each.
+> [!NOTE]
+> **IP Range Calculator provides two main input flows:**
+> - **Base Network** — Define the base network (e.g., `192.168.1.0/24`).
+> - **Network Requirements** — Add networks with the required host count for each.
 
 The tool automatically allocates subnets using **VLSM (Variable Length Subnet Masking)** and displays the network address, subnet mask, usable host range, and broadcast address for each network.
 
@@ -48,10 +50,11 @@ The tool automatically allocates subnets using **VLSM (Variable Length Subnet Ma
 
 ## Project
 
-**Live Demo:**  
-https://iprangecalculator.web.app/
+> [!TIP]
+> **Live Demo:**
+> https://iprangecalculator.web.app/
 
-**Project Title:**  
+**Project Title:**
 IP Range Calculator — VLSM & Subnet Planner
 IP Range Calculator is developed as a practical tool for exploring automatic subnet allocation and VLSM planning directly within modern web browsers.
 
